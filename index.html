@@ -7,14 +7,14 @@
     <meta name="author" content="Lokesh Hariram" />
     <meta property="og:title" content="Lokesh Hariram | AI/ML Engineer &amp; Software Developer" />
     <meta property="og:description" content="I build practical AI systems, data products, and production-ready applications using Python, machine learning, LLMs, cloud platforms, and modern APIs." />
-    <meta property="og:image" content="assets/images/DSC08171_optimized_1000.jpg" />
-    <meta property="og:image:alt" content="Lokesh Hariram profile portrait" />
+    <meta property="og:image" content="/assets/images/DSC08171_optimized_1000.jpg" />
+    <meta property="og:image:alt" content="Lokesh Hariram" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="/" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Lokesh Hariram | AI/ML Engineer &amp; Software Developer" />
     <meta name="twitter:description" content="I build practical AI systems, data products, and production-ready applications using Python, machine learning, LLMs, cloud platforms, and modern APIs." />
-    <meta name="twitter:image" content="assets/images/DSC08171_optimized_1000.jpg" />
+    <meta name="twitter:image" content="/assets/images/DSC08171_optimized_1000.jpg" />
     <title>Lokesh Hariram | AI/ML Engineer &amp; Software Developer</title>
     <link rel="icon" type="image/jpeg" href="assets/images/DSC08171_optimized_1000.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,8 +55,13 @@
 
       <section class="skills section" id="skills">
         <div class="section-title">SKILLS</div>
-        <p class="skill-hint">Tap a skill to learn more <span>Tap any skill to see my experience and proficiency.</span></p>
-        <div class="skill-grid" id="skill-grid"></div>
+        <p class="skill-hint">Swipe left or right to explore all skills <span class="skill-hint-desktop">Use the arrows or drag horizontally</span><span class="skill-hint-tap">Tap a skill to learn more</span></p>
+        <div class="skill-carousel" data-skill-carousel>
+          <button class="skill-carousel-arrow skill-carousel-prev" type="button" id="skill-prev" aria-label="Previous skills page" title="Previous skills page" disabled>←</button>
+          <div class="skill-grid" id="skill-grid" tabindex="0" aria-label="Skills pages"></div>
+          <button class="skill-carousel-arrow skill-carousel-next" type="button" id="skill-next" aria-label="Next skills page" title="Next skills page">→</button>
+        </div>
+        <div class="skill-page-dots" id="skill-page-dots" aria-label="Skills page progress"></div>
         <div class="skill-popover" id="skill-popover" role="dialog" aria-live="polite" aria-label="Skill details" hidden>
           <button class="skill-popover-close" type="button" aria-label="Close skill details">×</button>
           <strong class="skill-popover-name"></strong>

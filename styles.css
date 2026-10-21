@@ -302,3 +302,120 @@ main > .section{height:auto;min-height:100svh;overflow:visible}
 @media(prefers-reduced-motion:reduce){
   .carousel-arrow,.carousel-dot{transition:none}
 }
+
+/* Skills stays one viewport tall and pages horizontally without creating page overflow. */
+.skills{
+  height:100svh;
+  min-height:100svh;
+  max-height:100svh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  padding-top:clamp(1.25rem,4vh,3rem);
+  padding-bottom:clamp(1rem,3vh,2rem);
+}
+.skills .section-title{flex:0 0 auto;margin-bottom:.35rem}
+.skills .skill-hint{flex:0 0 auto;margin:0 auto clamp(.5rem,2vh,1.25rem);max-width:100%;line-height:1.45}
+.skill-hint-desktop,.skill-hint-tap{display:block!important}
+.skill-carousel{position:relative;display:flex;flex:1 1 auto;min-height:0;width:100%;max-width:100%;align-items:stretch}
+.skill-grid{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  min-height:0;
+  height:100%;
+  margin:0;
+  justify-content:flex-start;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x;
+  cursor:grab;
+}
+.skill-grid:active{cursor:grabbing}
+.skill-grid::-webkit-scrollbar{display:none}
+.skill-grid:focus-visible{outline:3px solid rgba(103,182,165,.35);outline-offset:-3px}
+.skill-page{
+  flex:0 0 100%;
+  min-width:100%;
+  min-height:0;
+  height:100%;
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  grid-template-rows:repeat(3,minmax(0,1fr));
+  align-items:center;
+  justify-items:center;
+  align-content:center;
+  gap:clamp(.65rem,1.5vw,1.25rem);
+  padding:clamp(.5rem,2vw,1rem) clamp(3rem,8vw,6rem);
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+.skill-page .skill{
+  width:var(--skill-size);
+  height:var(--skill-size);
+  min-width:var(--skill-size);
+  min-height:var(--skill-size);
+}
+.skill-carousel-arrow{
+  position:absolute;
+  z-index:3;
+  top:50%;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  min-height:44px;
+  padding:0;
+  border:1px solid rgba(79,146,158,.28);
+  border-radius:50%;
+  background:rgba(255,255,255,.94);
+  color:#4f929e;
+  font-family:var(--font-display);
+  font-size:24px;
+  line-height:1;
+  box-shadow:0 7px 16px rgba(36,73,82,.16);
+  transform:translateY(-50%);
+  transition:background .2s ease,color .2s ease,opacity .2s ease,transform .2s ease;
+}
+.skill-carousel-prev{left:clamp(.35rem,2.2vw,1.5rem)}
+.skill-carousel-next{right:clamp(.35rem,2.2vw,1.5rem)}
+.skill-carousel-arrow:not(:disabled):hover,.skill-carousel-arrow:not(:disabled):focus-visible{background:#67b6a5;color:#fff;transform:translateY(-50%) scale(1.06)}
+.skill-carousel-arrow:focus-visible{outline:3px solid rgba(103,182,165,.38);outline-offset:3px}
+.skill-carousel-arrow:disabled{cursor:not-allowed;opacity:.35;box-shadow:none}
+.skill-page-dots{flex:0 0 auto;display:flex;justify-content:center;align-items:center;gap:.4rem;margin-top:.5rem;min-height:12px}
+.skill-page-dot{width:8px;height:8px;min-height:8px;padding:0;border:1px solid #68aab4;border-radius:50%;background:transparent;box-shadow:none;opacity:.65;transition:width .2s ease,background .2s ease,opacity .2s ease}
+.skill-page-dot.is-active{width:22px;border-radius:99px;background:#63a9b4;opacity:1}
+.skill-page-dot:focus-visible{outline:2px solid rgba(103,182,165,.5);outline-offset:3px}
+.skills .skill-popover{position:absolute;z-index:5;left:50%;bottom:clamp(1rem,3vh,2rem);width:min(520px,calc(100% - 2rem));margin:0;transform:translate(-50%,8px)}
+.skills .skill-popover.is-open{transform:translate(-50%,0)}
+@media(max-width:900px){
+  .skill-page{grid-template-columns:repeat(5,minmax(0,1fr));padding-inline:3.25rem}
+  .skill-page .skill{--skill-size:clamp(62px,8vw,74px)}
+}
+@media(max-width:600px){
+  .skills{padding:clamp(.8rem,3vh,1.4rem) .75rem clamp(.75rem,2vh,1.25rem)}
+  .skills .section-title{margin-bottom:.2rem}
+  .skills .skill-hint{font-size:clamp(.58rem,2.5vw,.75rem);margin-bottom:.35rem}
+  .skill-hint-desktop{display:none!important}
+  .skill-hint-tap{display:block!important}
+  .skill-page{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:.5rem;padding-inline:2.5rem}
+  .skill-page .skill{--skill-size:clamp(64px,19vw,74px)}
+  .skill-carousel-arrow{width:36px;height:36px;min-height:36px;font-size:20px}
+  .skill-page-dots{margin-top:.35rem}
+  .skills .skill-popover{bottom:.75rem;width:calc(100% - 1rem)}
+}
+@media(max-width:350px){
+  .skill-page{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:.45rem;padding-inline:2.35rem}
+  .skill-page .skill{--skill-size:68px}
+}
+@media(prefers-reduced-motion:reduce){
+  .skill-grid{scroll-behavior:auto}
+  .skill-carousel-arrow,.skill-page-dot{transition:none}
+}
