@@ -25,8 +25,106 @@ const content = {
 };
 document.querySelector('#about-text').innerHTML = content.about.replace(/\n\n/g, '<br><br>');
 document.querySelector('#experience-track').innerHTML = content.experience.map((x, index) => `<article class="experience-card"><div class="card-number" aria-label="Experience ${String(index + 1).padStart(2, '0')}">${String(index + 1).padStart(2, '0')}</div><div class="company-mark">${x.mark}</div><h3>${x.title}</h3><div class="company">${x.company}</div><div class="techs">${x.tech}</div><div class="date">${x.date}</div><ul>${x.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`).join('');
-const allSkills = content.skills.flatMap(category => category.items);
-document.querySelector('#skill-grid').innerHTML = allSkills.map(x => `<div class="skill" title="${x.full}" style="--skill:${x.c}"><strong>${x.n}</strong><span>${x.p}</span></div>`).join('');
+const skillExplanations = {
+  "Python":"Used for machine learning, automation, data analysis, and backend development.",
+  "LLMs":"Used to add language understanding, generation, and reasoning to AI workflows.",
+  "Generative AI":"Used to create practical text-generation and assistant experiences.",
+  "OpenAI API":"Used to integrate language models into application workflows and tools.",
+  "Claude API":"Used for reliable language-model workflows, analysis, and structured responses.",
+  "RAG":"Used to ground model responses in relevant source information.",
+  "AI Agents":"Used to coordinate model reasoning, tools, and multi-step tasks.",
+  "Embeddings":"Used to represent text for semantic similarity and retrieval.",
+  "Vector Search":"Used to find semantically relevant records for AI applications.",
+  "Tool Calling":"Used to let models invoke application functions in controlled workflows.",
+  "Structured Outputs":"Used to keep model responses consistent with an expected data shape.",
+  "LLM Evaluation":"Used to compare model behavior against quality and reliability criteria.",
+  "Guardrails":"Used to constrain AI behavior and make application outputs safer and more predictable.",
+  "Natural Language-to-SQL":"Used to translate business questions into query workflows for structured data.",
+  "RAG Pipelines":"Used to ingest, retrieve, and pass relevant context into model prompts.",
+  "Agentic Workflows":"Used to coordinate multi-step tasks that combine models, tools, and validation.",
+  "Human-in-the-Loop Systems":"Used to add review and approval steps where people should make the final decision.",
+  "Model Evaluation":"Used to measure model quality and identify areas for improvement.",
+  "FastAPI":"Used to build lightweight Python APIs for data and AI applications.",
+  "REST APIs":"Used to expose application capabilities through predictable HTTP endpoints.",
+  "JSON Schema":"Used to define and validate the shape of API and model data.",
+  "API Integration":"Used to connect applications with external services and internal systems.",
+  "Contract Validation":"Used to verify that requests and responses follow an agreed interface.",
+  "XGBoost":"Used for predictive modeling and explainable tabular-data classification or regression.",
+  "ARIMA":"Used for time-series forecasting when historical patterns are informative.",
+  "Predictive Modeling":"Used to estimate outcomes and support data-informed decisions.",
+  "Feature Engineering":"Used to turn raw data into useful signals for machine-learning models.",
+  "Time-Series Forecasting":"Used to model trends and future values over time.",
+  "Statistical Analysis":"Used to summarize data, test patterns, and support sound conclusions.",
+  "Exploratory Data Analysis":"Used to understand distributions, relationships, and data-quality issues.",
+  "AWS":"Used to build and operate cloud-based application and data workflows.",
+  "Azure":"Used to support cloud data and application engineering workflows.",
+  "Azure Data Factory":"Used to orchestrate data movement and transformation pipelines.",
+  "Azure Synapse Analytics":"Used to work with large-scale analytical data and SQL workflows.",
+  "Docker":"Used to package applications and services with consistent environments.",
+  "Kubernetes":"Used to coordinate containerized services in a repeatable deployment environment.",
+  "CI/CD":"Used to automate checks, builds, and delivery steps for software changes.",
+  "ETL/ELT":"Used to move, transform, and validate data for downstream use.",
+  "Data Modeling":"Used to organize data structures so they remain useful and maintainable.",
+  "PostgreSQL":"Used for reliable relational storage, querying, and application persistence.",
+  "Power BI":"Used to build interactive dashboards for operational and business analysis.",
+  "DAX":"Used to create calculations and measures in Power BI data models.",
+  "Power Query":"Used to clean, reshape, and prepare data for analysis.",
+  "KPI Analysis":"Used to track performance measures and identify operational trends.",
+  "Dashboard Development":"Used to present metrics and findings in clear, interactive views.",
+  "Git":"Used to track changes and manage development work safely.",
+  "GitHub":"Used to collaborate on code, review changes, and maintain project history.",
+  "Requirements Gathering":"Used to clarify user needs and define useful technical outcomes.",
+  "Technical Discovery":"Used to understand constraints, systems, and implementation options.",
+  "Stakeholder Collaboration":"Used to align technical work with the people who rely on its results.",
+  "Technical Prototyping":"Used to test ideas quickly before investing in a larger implementation.",
+  "Systems Integration":"Used to connect services and data across an application landscape.",
+  "Solution Design":"Used to shape maintainable technical approaches around real requirements."
+};
+const allSkills = content.skills.flatMap(category => category.items.map(item => ({...item, category: category.name})));
+document.querySelector('#skill-grid').innerHTML = allSkills.map((x, index) => `<button class="skill" type="button" title="${x.full}" aria-label="${x.full}" aria-expanded="false" aria-controls="skill-popover" data-skill-index="${index}" style="--skill:${x.c}"><strong>${x.n}</strong><span>${x.p}</span></button>`).join('');
+const skillGrid = document.querySelector('#skill-grid');
+const skillPopover = document.querySelector('#skill-popover');
+const skillPopoverName = skillPopover.querySelector('.skill-popover-name');
+const skillPopoverLevel = skillPopover.querySelector('.skill-popover-level');
+const skillPopoverDescription = skillPopover.querySelector('.skill-popover-description');
+const skillPopoverClose = skillPopover.querySelector('.skill-popover-close');
+let activeSkillIndex = null;
+let skillCloseTimer;
+const skillLevel = proficiency => Number.parseInt(proficiency, 10) >= 90 ? 'Advanced' : Number.parseInt(proficiency, 10) >= 80 ? 'Proficient' : 'Developing';
+const closeSkillDetails = () => {
+  if (activeSkillIndex === null) return;
+  activeSkillIndex = null;
+  skillGrid.querySelectorAll('.skill').forEach(skill => skill.setAttribute('aria-expanded', 'false'));
+  skillPopover.classList.remove('is-open');
+  clearTimeout(skillCloseTimer);
+  skillCloseTimer = setTimeout(() => skillPopover.hidden = true, 180);
+};
+const openSkillDetails = index => {
+  const skill = allSkills[index];
+  if (!skill) return;
+  clearTimeout(skillCloseTimer);
+  activeSkillIndex = index;
+  skillGrid.querySelectorAll('.skill').forEach(button => button.setAttribute('aria-expanded', button.dataset.skillIndex === String(index) ? 'true' : 'false'));
+  skillPopoverName.textContent = skill.full;
+  skillPopoverLevel.textContent = `${skillLevel(skill.p)} · ${skill.p} proficiency`;
+  skillPopoverDescription.textContent = skillExplanations[skill.full] || `Used in ${skill.category.toLowerCase()} work and software-engineering projects.`;
+  skillPopover.hidden = false;
+  requestAnimationFrame(() => skillPopover.classList.add('is-open'));
+};
+skillGrid.addEventListener('click', event => {
+  const button = event.target.closest('.skill');
+  if (!button) return;
+  const index = Number(button.dataset.skillIndex);
+  if (activeSkillIndex === index) closeSkillDetails();
+  else openSkillDetails(index);
+});
+skillPopoverClose.addEventListener('click', closeSkillDetails);
+document.addEventListener('click', event => {
+  if (!event.target.closest('#skill-grid, #skill-popover')) closeSkillDetails();
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeSkillDetails();
+});
 document.querySelector('#project-stack').innerHTML = content.projects.map((x, index) => `<article class="project-card"><div class="card-number" aria-label="Project ${String(index + 1).padStart(2, '0')}">PROJECT ${String(index + 1).padStart(2, '0')}</div><h3>${x.title}</h3><p class="project-overview">${x.overview}</p><ul class="project-points">${x.points.map(point => `<li>${point}</li>`).join('')}</ul><div class="project-tech">${x.tech}</div><a class="project-link" href="${x.url}" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></article>`).join('');
 const phrases = ["I’m Lokesh","I like morning runs","I turn ideas into working tools","I get lost in a good book","Always curious. Always building."];
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
