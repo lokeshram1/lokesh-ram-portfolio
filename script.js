@@ -24,60 +24,136 @@ const content = {
   ]
 };
 document.querySelector('#about-text').innerHTML = content.about.replace(/\n\n/g, '<br><br>');
-document.querySelector('#experience-track').innerHTML = content.experience.map(x => `<article class="experience-card"><div class="company-mark">${x.mark}</div><h3>${x.title}</h3><div class="company">${x.company}</div><div class="techs">${x.tech}</div><div class="date">${x.date}</div><ul>${x.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`).join('');
+document.querySelector('#experience-track').innerHTML = content.experience.map((x, index) => `<article class="experience-card"><div class="card-number" aria-label="Experience ${String(index + 1).padStart(2, '0')}">${String(index + 1).padStart(2, '0')}</div><div class="company-mark">${x.mark}</div><h3>${x.title}</h3><div class="company">${x.company}</div><div class="techs">${x.tech}</div><div class="date">${x.date}</div><ul>${x.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`).join('');
 const allSkills = content.skills.flatMap(category => category.items);
 document.querySelector('#skill-grid').innerHTML = allSkills.map(x => `<div class="skill" title="${x.full}" style="--skill:${x.c}"><strong>${x.n}</strong><span>${x.p}</span></div>`).join('');
-document.querySelector('#project-stack').innerHTML = content.projects.map(x => `<article class="project-card"><h3>${x.title}</h3><p class="project-overview">${x.overview}</p><ul class="project-points">${x.points.map(point => `<li>${point}</li>`).join('')}</ul><div class="project-tech">${x.tech}</div><a class="project-link" href="${x.url}" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></article>`).join('');
-const phrases = ["Hi, I'm Alex.","I build useful things.","And I love good coffee."];
+document.querySelector('#project-stack').innerHTML = content.projects.map((x, index) => `<article class="project-card"><div class="card-number" aria-label="Project ${String(index + 1).padStart(2, '0')}">PROJECT ${String(index + 1).padStart(2, '0')}</div><h3>${x.title}</h3><p class="project-overview">${x.overview}</p><ul class="project-points">${x.points.map(point => `<li>${point}</li>`).join('')}</ul><div class="project-tech">${x.tech}</div><a class="project-link" href="${x.url}" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></article>`).join('');
+const phrases = ["I’m Lokesh","I like morning runs","I turn ideas into working tools","I get lost in a good book","Always curious. Always building."];
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let phrase=0, char=0, deleting=false;
-function type(){const el=document.querySelector('#typed-line'); if(!el)return; const current=phrases[phrase]; el.textContent=current.slice(0,char); if(!deleting&&char<current.length){char++;setTimeout(type,85)}else if(!deleting){deleting=true;setTimeout(type,1500)}else if(char>0){char--;setTimeout(type,42)}else{deleting=false;phrase=(phrase+1)%phrases.length;setTimeout(type,300)}}
+function type(){const el=document.querySelector('#typed-line'); if(!el)return; if(prefersReducedMotion){el.textContent=phrases[0];return;} const current=phrases[phrase]; el.textContent=current.slice(0,char); if(!deleting&&char<current.length){char++;setTimeout(type,85)}else if(!deleting){deleting=true;setTimeout(type,1500)}else if(char>0){char--;setTimeout(type,42)}else{deleting=false;phrase=(phrase+1)%phrases.length;setTimeout(type,300)}}
 type();
-const track=document.querySelector('.experience-track'), progress=document.querySelector('.scroll-progress span'); track.addEventListener('scroll',()=>{progress.style.width=`${Math.max(24,Math.min(100,track.scrollLeft/(track.scrollWidth-track.clientWidth)*100+24))}%`});
-const projectTrack=document.querySelector('.project-track'), projectProgress=document.querySelector('.project-progress span'); projectTrack.addEventListener('scroll',()=>{projectProgress.style.width=`${Math.max(24,Math.min(100,projectTrack.scrollLeft/(projectTrack.scrollWidth-projectTrack.clientWidth)*100+24))}%`});
+function setupCarousel(selector) {
+  const wrap = document.querySelector(`[data-carousel="${selector}"]`);
+  if (!wrap) return;
+  const track = wrap.querySelector('.experience-track, .project-track');
+  const cards = [...track.children];
+  const previous = wrap.querySelector('[data-carousel-prev]');
+  const next = wrap.querySelector('[data-carousel-next]');
+  const dots = wrap.parentElement.querySelector('[data-carousel-dots]');
+  let active = 0;
+  let frame = 0;
+  let dragging = false;
+  let dragStart = 0;
+  let dragScrollStart = 0;
 
-// Move one page section per gesture while leaving tall content and horizontal carousels alone.
+  const targetFor = index => Math.max(0, cards[index].offsetLeft - parseFloat(getComputedStyle(track).paddingLeft || 0));
+  const nearestCard = () => {
+    const current = track.scrollLeft;
+    return cards.reduce((closest, card, index) => Math.abs(targetFor(index) - current) < Math.abs(targetFor(closest) - current) ? index : closest, 0);
+  };
+  const update = index => {
+    active = Math.max(0, Math.min(cards.length - 1, index));
+    previous.disabled = active === 0;
+    next.disabled = active === cards.length - 1;
+    [...dots.children].forEach((dot, dotIndex) => {
+      const selected = dotIndex === active;
+      dot.classList.toggle('is-active', selected);
+      dot.setAttribute('aria-current', selected ? 'true' : 'false');
+    });
+    const progress = wrap.parentElement.querySelector('.scroll-progress span');
+    if (progress) progress.style.width = `${((active + 1) / cards.length) * 100}%`;
+  };
+  const sync = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => update(nearestCard()));
+  };
+  const move = delta => {
+    const target = Math.max(0, Math.min(cards.length - 1, active + delta));
+    track.scrollTo({ left: targetFor(target), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    update(target);
+  };
+
+  cards.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'carousel-dot';
+    dot.setAttribute('aria-label', `${selector === 'experience' ? 'Experience' : 'Project'} ${index + 1}`);
+    dot.addEventListener('click', () => {
+      track.scrollTo({ left: targetFor(index), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      update(index);
+    });
+    dots.append(dot);
+  });
+
+  previous.addEventListener('click', () => move(-1));
+  next.addEventListener('click', () => move(1));
+  track.addEventListener('scroll', sync, { passive: true });
+  track.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    move(event.key === 'ArrowRight' ? 1 : -1);
+  });
+
+  // Native touch scrolling remains available; mouse dragging adds the same affordance on desktop.
+  track.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    dragging = true;
+    dragStart = event.clientX;
+    dragScrollStart = track.scrollLeft;
+    track.classList.add('is-dragging');
+    track.setPointerCapture(event.pointerId);
+  });
+  track.addEventListener('pointermove', event => {
+    if (!dragging) return;
+    event.preventDefault();
+    track.scrollLeft = dragScrollStart - (event.clientX - dragStart);
+  });
+  const stopDragging = event => {
+    if (!dragging) return;
+    dragging = false;
+    track.classList.remove('is-dragging');
+    if (event.pointerId !== undefined && track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+    sync();
+  };
+  track.addEventListener('pointerup', stopDragging);
+  track.addEventListener('pointercancel', stopDragging);
+  track.addEventListener('lostpointercapture', stopDragging);
+
+  update(0);
+}
+
+setupCarousel('experience');
+setupCarousel('projects');
+
+// Keep navigation precise while leaving wheel, trackpad, touch, and carousel scrolling native.
 (() => {
+  const pageScroller = document.querySelector('main');
   const sections = [...document.querySelectorAll('main > .section')];
   let activeIndex = 0;
-  let snapLocked = false;
-  let touchStart = null;
-  const lockDuration = 760;
 
-  const carouselFor = target => target instanceof Element ? target.closest('.experience-track, .project-track') : null;
   const nearestSection = () => {
     let index = 0;
-    sections.forEach((section, i) => { if (section.offsetTop <= window.scrollY + 40) index = i; });
+    sections.forEach((section, i) => { if (section.offsetTop <= pageScroller.scrollTop + 40) index = i; });
     return index;
-  };
-  const isTallSectionInterior = section => {
-    if (!section) return false;
-    const maxInnerOffset = section.scrollHeight - window.innerHeight;
-    const offset = window.scrollY - section.offsetTop;
-    return maxInnerOffset > 24 && offset > 24 && offset < maxInnerOffset - 24;
   };
   const goToSection = index => {
     activeIndex = Math.max(0, Math.min(sections.length - 1, index));
-    snapLocked = true;
-    window.scrollTo({ top: sections[activeIndex].offsetTop, behavior: 'smooth' });
-    window.setTimeout(() => { snapLocked = false; activeIndex = nearestSection(); }, lockDuration);
+    pageScroller.scrollTo({ top: sections[activeIndex].offsetTop, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   };
 
-  window.addEventListener('scroll', () => { if (!snapLocked) activeIndex = nearestSection(); }, { passive: true });
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const targetId = link.getAttribute('href').slice(1);
+    const targetIndex = sections.findIndex(section => section.id === targetId);
+    if (targetIndex < 0) return;
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      history.replaceState(null, '', `#${targetId}`);
+      goToSection(targetIndex);
+    });
+  });
 
-  window.addEventListener('wheel', event => {
-    const carousel = carouselFor(event.target);
-    if (carousel && carousel.scrollWidth > carousel.clientWidth) {
-      const horizontalDelta = event.deltaX || event.deltaY;
-      if (horizontalDelta) { carousel.scrollLeft += horizontalDelta; event.preventDefault(); }
-      return;
-    }
-    if (Math.abs(event.deltaY) < Math.abs(event.deltaX) || Math.abs(event.deltaY) < 10) return;
-    if (snapLocked) { event.preventDefault(); return; }
-    const section = sections[activeIndex] || sections[nearestSection()];
-    if (isTallSectionInterior(section)) return;
-    event.preventDefault();
-    goToSection(activeIndex + (event.deltaY > 0 ? 1 : -1));
-  }, { passive: false });
+  pageScroller.addEventListener('scroll', () => { activeIndex = nearestSection(); }, { passive: true });
 
   window.addEventListener('keydown', event => {
     if (event.target.matches('input, textarea, select, [contenteditable="true"]')) return;
@@ -88,19 +164,4 @@ const projectTrack=document.querySelector('.project-track'), projectProgress=doc
     const move = actions[event.key];
     goToSection(move === Infinity ? sections.length - 1 : move === -Infinity ? 0 : activeIndex + move);
   });
-
-  window.addEventListener('touchstart', event => {
-    if (!carouselFor(event.target)) touchStart = [event.touches[0].clientX, event.touches[0].clientY];
-  }, { passive: true });
-  window.addEventListener('touchend', event => {
-    if (!touchStart || snapLocked || carouselFor(event.target)) { touchStart = null; return; }
-    const [startX, startY] = touchStart;
-    const deltaX = event.changedTouches[0].clientX - startX;
-    const deltaY = event.changedTouches[0].clientY - startY;
-    touchStart = null;
-    if (Math.abs(deltaY) < 48 || Math.abs(deltaY) < Math.abs(deltaX)) return;
-    const section = sections[activeIndex] || sections[nearestSection()];
-    if (isTallSectionInterior(section)) return;
-    goToSection(activeIndex + (deltaY < 0 ? 1 : -1));
-  }, { passive: true });
 })();
