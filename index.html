@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A clean software engineer portfolio." />
+    <title>Alex Rowan — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="hero section" id="home">
+        <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <header class="topbar">
+          <div class="socials" aria-label="Social links">
+            <a class="social-icon linkedin-mark" href="https://www.linkedin.com/in/lokesh-ram-hariram/" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+            <a class="social-icon" href="https://github.com/lokeshram1/" target="_blank" rel="noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.3-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.4 9.4 0 0 1 5.1 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.3 4.6-4.5 4.9.4.3.7 1 .7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
+            <a class="social-icon mail-mark" href="mailto:lokeshramloka@gmail.com" aria-label="Email — Get in touch"><svg viewBox="0 0 24 20" aria-hidden="true"><rect x="1.5" y="1.5" width="21" height="17" rx="1"/><path d="m2.5 3 9.25 7 9.75-7"/></svg></a>
+          </div>
+          <a class="contact-link" href="mailto:lokeshramloka@gmail.com" aria-label="Email — Get in touch"><span class="envelope" aria-hidden="true">▱</span> GET IN TOUCH</a>
+        </header>
+        <div class="hero-content">
+          <div class="portrait portrait-small"><img src="assets/images/DSC08171_optimized_1000.jpg" alt="Lokesh Ram profile portrait" /></div>
+          <div class="eyebrow">SOFTWARE ENGINEER</div>
+          <h1><span id="typed-line">Hi, I'm Alex.</span><span class="caret">|</span></h1>
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="#about">ABOUT</a><a href="#experience">EXPERIENCE</a><a href="#skills">SKILLS</a><a href="#projects">PROJECTS</a>
+          </nav>
+        </div>
+        <a class="home-button" href="#home" aria-label="Back to home">⌂</a>
+      </section>
+
+      <section class="about section" id="about">
+        <div class="section-title">ABOUT</div>
+        <div class="about-grid">
+          <div class="about-photo portrait-large"><img src="assets/images/DSC08171_optimized_1000.jpg?v=about-color-20261021" alt="Lokesh Ram profile portrait" /></div>
+          <div class="about-copy"><h2>Here is a <u>little</u> background</h2><p id="about-text"></p></div>
+        </div>
+      </section>
+
+      <section class="skills section" id="skills">
+        <div class="section-title">SKILLS</div>
+        <p class="skill-hint">HOVER OVER A SKILL FOR CURRENT PROFICIENCY</p>
+        <div class="skill-grid" id="skill-grid"></div>
+      </section>
+
+      <section class="experience section" id="experience">
+        <div class="section-title">EXPERIENCE</div>
+        <div class="experience-track" id="experience-track"></div>
+        <div class="scroll-progress"><span></span></div>
+      </section>
+
+      <section class="projects section" id="projects">
+        <div class="section-title">PROJECTS</div>
+        <div class="project-track" id="project-stack"></div>
+        <div class="scroll-progress project-progress"><span></span></div>
+      </section>
+
+      <section class="contact section" id="contact">
+        <div class="contact-inner">
+          <h2>I have got just what you need. <u>Lets talk.</u></h2>
+          <div class="contact-details"><span>⌕ &nbsp; (512) 701-8465</span><span>✉ &nbsp; lokeshramloka@gmail.com</span><span>● &nbsp; Austin, Texas</span></div>
+          <form onsubmit="return false">
+            <div class="form-row"><input placeholder="Name" /><input placeholder="Email" type="email" /></div>
+            <input placeholder="Subject" /><textarea placeholder="Message" rows="4"></textarea><button>Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
