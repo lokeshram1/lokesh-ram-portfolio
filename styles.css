@@ -101,6 +101,15 @@ h1,h2,h3{letter-spacing:-.045em}
 .experience-card .company{font-family:var(--font-body);font-weight:700;line-height:1.35}
 .techs,.project-tech{font-family:var(--font-body);font-size:clamp(.68rem,.2vw + .58rem,.82rem);line-height:1.5;letter-spacing:.01em}
 .experience-card ul,.project-points{line-height:1.55}
+.experience-card,.project-card{color:#40515a}
+.experience-card h3,.project-card h3{color:#263b45;font-weight:650}
+.experience-card .company{color:#368f84}
+.experience-card .techs,.project-overview{color:#40515a;font-weight:550}
+.experience-card .date{color:#667b85;font-weight:600}
+.experience-card ul,.project-points{color:#40515a;font-weight:500}
+.project-tech{color:#368f84;font-weight:700}
+.experience .carousel-hint,.projects .carousel-hint{color:#657985;font-weight:500}
+.experience .carousel-hint span,.projects .carousel-hint span{color:#438896;font-weight:600}
 .company-mark{box-shadow:0 8px 16px rgba(37,64,95,.1);border-color:rgba(255,255,255,.8)}
 .skill{border-color:rgba(105,157,169,.42);box-shadow:0 6px 14px rgba(63,108,119,.08);font-family:var(--font-display)}
 .skill:hover{box-shadow:0 9px 18px rgba(63,108,119,.18)}
@@ -523,4 +532,65 @@ main > .section{height:auto;min-height:100svh;overflow:visible}
 @media(prefers-reduced-motion:reduce){
   .skill-hint-arrow,.skill-carousel-arrow,.skill-scroll-progress span{animation:none;transition:none}
   .skill-grid{scroll-behavior:auto}
+}
+
+/* Readability pass: larger, higher-contrast type for comfortable professional viewing. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{color:#26363d;font-size:clamp(1rem,.18vw + .94rem,1.08rem);line-height:1.65}
+.section-title{color:#566b78;font-size:clamp(.92rem,.4vw + .76rem,1.08rem);font-weight:700}
+.eyebrow{color:#566b78;font-size:clamp(.84rem,.32vw + .72rem,1rem);font-weight:600}
+.main-nav{color:#526673;font-size:clamp(.78rem,.22vw + .7rem,.92rem);font-weight:600}
+.contact-link{color:#687986;font-size:clamp(.78rem,.2vw + .7rem,.9rem);font-weight:600}
+.about-copy p{color:#304149;font-size:clamp(.92rem,.22vw + .84rem,1.04rem);line-height:1.8;font-weight:500}
+.skill-hint{color:#687b86;font-size:clamp(.72rem,.18vw + .66rem,.84rem);font-weight:600}
+.skill-grid .skill{font-size:clamp(.68rem,.22vw + .6rem,.82rem);font-weight:700}
+.skill-scroll-meta{color:#687b86;font-size:.72rem;font-weight:600}
+.carousel-hint{font-size:clamp(.74rem,.18vw + .68rem,.86rem);line-height:1.65}
+.card-number{font-size:clamp(.72rem,.2vw + .65rem,.88rem);color:#527c86}
+.experience-card,.project-card{flex-basis:min(48vw,500px)}
+.experience-card{min-height:400px}
+.experience-card h3,.project-card h3{font-size:clamp(1.15rem,.35vw + 1rem,1.35rem);line-height:1.3}
+.experience-card .company{font-size:clamp(.84rem,.18vw + .78rem,.96rem);line-height:1.5}
+.experience-card .techs{font-size:clamp(.8rem,.2vw + .72rem,.94rem);line-height:1.65}
+.experience-card .date{font-size:clamp(.68rem,.13vw + .63rem,.76rem)}
+.experience-card ul{font-size:clamp(.8rem,.18vw + .73rem,.92rem);line-height:1.68;padding-left:1.15rem}
+.experience-card li,.project-points li{margin-bottom:.4rem}
+.project-card{min-height:470px}
+.project-overview{font-size:clamp(.84rem,.18vw + .77rem,.96rem);line-height:1.65}
+.project-points{font-size:clamp(.8rem,.18vw + .73rem,.92rem);line-height:1.65;padding-left:1.15rem}
+.project-tech{font-size:clamp(.76rem,.18vw + .69rem,.88rem);line-height:1.6}
+.project-link{font-size:.8rem;padding:.72rem 1rem}
+.contact-details{color:#344750;font-size:clamp(.92rem,.2vw + .84rem,1.04rem);font-weight:500;line-height:1.5}
+input,textarea{color:#26363d;font-size:clamp(.84rem,.18vw + .78rem,.94rem);line-height:1.5;padding:.9rem}
+input::placeholder,textarea::placeholder{color:#5f7079;opacity:1}
+button,.resume-button{font-size:.86rem;min-height:46px}
+
+@media(max-width:900px){
+  .experience-card,.project-card{flex-basis:min(62vw,520px)}
+}
+@media(max-width:700px){
+  .section-title{font-size:clamp(.82rem,3.5vw,.96rem)}
+  .eyebrow{font-size:clamp(.68rem,2.8vw,.82rem)}
+  .main-nav{font-size:clamp(.64rem,2.6vw,.76rem);gap:clamp(.7rem,4vw,1.25rem)}
+  .contact-link{font-size:clamp(.66rem,2.6vw,.76rem)}
+  .about-copy p{font-size:clamp(.94rem,3.8vw,1.04rem);line-height:1.72}
+  .skill-hint{font-size:clamp(.7rem,2.8vw,.8rem)}
+  .skill-grid .skill{font-size:clamp(.64rem,2.6vw,.76rem)}
+  .skill-scroll-meta{font-size:.7rem}
+  .carousel-hint{font-size:clamp(.76rem,3vw,.86rem);line-height:1.55}
+  .experience-card,.project-card{flex-basis:86vw;max-width:86vw}
+  .experience-card{min-height:560px;padding:1.25rem}
+  .experience-card h3,.project-card h3{font-size:clamp(1.06rem,4.6vw,1.22rem)}
+  .experience-card .company{font-size:clamp(.88rem,3.5vw,.98rem)}
+  .experience-card .techs{font-size:clamp(.86rem,3.4vw,.96rem)}
+  .experience-card .date{font-size:clamp(.7rem,2.8vw,.78rem)}
+  .experience-card ul{font-size:clamp(.88rem,3.5vw,.98rem);line-height:1.65}
+  .project-card{min-height:590px;padding:1.25rem}
+  .project-overview{font-size:clamp(.9rem,3.55vw,1rem);line-height:1.62}
+  .project-points{font-size:clamp(.88rem,3.5vw,.98rem);line-height:1.62}
+  .project-tech{font-size:clamp(.82rem,3.25vw,.92rem)}
+  .project-link{font-size:.84rem;min-height:46px}
+  .contact-details{font-size:clamp(.92rem,3.65vw,1.02rem)}
+  input,textarea{font-size:clamp(.9rem,3.55vw,1rem)}
+  button,.resume-button{font-size:.9rem}
 }
