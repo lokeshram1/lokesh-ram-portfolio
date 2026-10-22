@@ -102,8 +102,6 @@ h1,h2,h3{letter-spacing:-.045em}
 .techs,.project-tech{font-family:var(--font-body);font-size:clamp(.68rem,.2vw + .58rem,.82rem);line-height:1.5;letter-spacing:.01em}
 .experience-card ul,.project-points{line-height:1.55}
 .company-mark{box-shadow:0 8px 16px rgba(37,64,95,.1);border-color:rgba(255,255,255,.8)}
-.company-mark svg{display:block;width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.company-mark .icon-fill{fill:currentColor;stroke:none}
 .skill{border-color:rgba(105,157,169,.42);box-shadow:0 6px 14px rgba(63,108,119,.08);font-family:var(--font-display)}
 .skill:hover{box-shadow:0 9px 18px rgba(63,108,119,.18)}
 .contact h2{font-family:var(--font-display);font-size:clamp(1.35rem,1.2vw + .85rem,2rem);line-height:1.15;font-weight:600;letter-spacing:-.04em}
