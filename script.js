@@ -111,6 +111,43 @@ const finishSkillDrag = event => {
 };
 skillGrid.addEventListener('pointerup', finishSkillDrag);
 skillGrid.addEventListener('pointercancel', finishSkillDrag);
+const skillPrevious = document.querySelector('[data-skill-prev]');
+const skillNext = document.querySelector('[data-skill-next]');
+const skillProgress = document.querySelector('.skill-scroll-progress');
+const skillProgressFill = skillProgress.querySelector('span');
+const skillScrollLabel = document.querySelector('.skill-scroll-label');
+const skillStep = () => {
+  const firstSkill = skillGrid.querySelector('.skill');
+  if (!firstSkill) return Math.max(1, skillGrid.clientWidth * .5);
+  const styles = getComputedStyle(skillGrid);
+  const columnGap = parseFloat(styles.columnGap || styles.gap || '0');
+  return Math.max(1, firstSkill.getBoundingClientRect().width + columnGap);
+};
+const updateSkillControls = () => {
+  const maxScroll = Math.max(0, skillGrid.scrollWidth - skillGrid.clientWidth);
+  const currentScroll = Math.max(0, Math.min(maxScroll, skillGrid.scrollLeft));
+  const progress = maxScroll ? (currentScroll / maxScroll) * 100 : 100;
+  skillPrevious.disabled = currentScroll <= 1;
+  skillNext.disabled = maxScroll <= 1 || currentScroll >= maxScroll - 1;
+  skillProgressFill.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  skillProgress.setAttribute('aria-valuenow', String(Math.round(progress)));
+  skillScrollLabel.textContent = maxScroll > 1 ? `Scroll to explore · ${Math.round(progress)}% viewed` : 'All skills visible';
+};
+const moveSkills = direction => {
+  skillGrid.scrollBy({left: direction * skillStep(), behavior: prefersReducedMotion ? 'auto' : 'smooth'});
+  skillGrid.focus({preventScroll:true});
+};
+skillPrevious.addEventListener('click', () => moveSkills(-1));
+skillNext.addEventListener('click', () => moveSkills(1));
+skillGrid.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') { event.preventDefault(); moveSkills(-1); }
+  if (event.key === 'ArrowRight') { event.preventDefault(); moveSkills(1); }
+  if (event.key === 'Home') { event.preventDefault(); skillGrid.scrollTo({left:0, behavior:prefersReducedMotion ? 'auto' : 'smooth'}); }
+  if (event.key === 'End') { event.preventDefault(); skillGrid.scrollTo({left:skillGrid.scrollWidth, behavior:prefersReducedMotion ? 'auto' : 'smooth'}); }
+});
+skillGrid.addEventListener('scroll', updateSkillControls, {passive:true});
+window.addEventListener('resize', updateSkillControls);
+requestAnimationFrame(updateSkillControls);
 const skillPopover = document.querySelector('#skill-popover');
 const skillPopoverName = skillPopover.querySelector('.skill-popover-name');
 const skillPopoverLevel = skillPopover.querySelector('.skill-popover-level');
