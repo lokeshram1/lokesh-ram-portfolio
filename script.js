@@ -82,68 +82,7 @@ const skillExplanations = {
 };
 const allSkills = content.skills.flatMap(category => category.items.map(item => ({...item, category: category.name})));
 const skillGrid = document.querySelector('#skill-grid');
-const skillPrevious = document.querySelector('#skill-prev');
-const skillNext = document.querySelector('#skill-next');
-const skillDots = document.querySelector('#skill-page-dots');
-let skillPageSize = 0;
-let activeSkillPage = 0;
-const getSkillPageSize = () => window.matchMedia('(max-width:350px)').matches ? 6 : window.matchMedia('(max-width:600px)').matches ? 9 : window.matchMedia('(max-width:900px)').matches ? 15 : 18;
-const updateSkillPager = page => {
-  const lastPage = Math.max(0, skillDots.children.length - 1);
-  activeSkillPage = Math.max(0, Math.min(page, lastPage));
-  skillPrevious.disabled = activeSkillPage === 0;
-  skillNext.disabled = activeSkillPage === lastPage;
-  [...skillDots.children].forEach((dot, index) => {
-    const isActive = index === activeSkillPage;
-    dot.classList.toggle('is-active', isActive);
-    dot.setAttribute('aria-current', isActive ? 'true' : 'false');
-  });
-};
-const renderSkillPages = () => {
-  const previousPage = activeSkillPage;
-  skillPageSize = getSkillPageSize();
-  const pageCount = Math.ceil(allSkills.length / skillPageSize);
-  skillGrid.innerHTML = Array.from({length: pageCount}, (_, page) => {
-    const pageSkills = allSkills.slice(page * skillPageSize, (page + 1) * skillPageSize);
-    return `<section class="skill-page" aria-label="Skills page ${page + 1} of ${pageCount}">${pageSkills.map((x, offset) => {
-      const index = page * skillPageSize + offset;
-      return `<button class="skill" type="button" title="${x.full}" aria-label="${x.full}" aria-expanded="false" aria-controls="skill-popover" data-skill-index="${index}" style="--skill:${x.c}"><strong>${x.n}</strong><span>${x.p}</span></button>`;
-    }).join('')}</section>`;
-  }).join('');
-  skillDots.innerHTML = Array.from({length: pageCount}, (_, page) => `<button class="skill-page-dot" type="button" data-page="${page}" aria-label="Skills page ${page + 1}" aria-current="${page === 0 ? 'true' : 'false'}"></button>`).join('');
-  const nextPage = Math.min(previousPage, Math.max(0, pageCount - 1));
-  const syncPagePosition = () => {
-    skillGrid.scrollLeft = nextPage * skillGrid.clientWidth;
-    updateSkillPager(nextPage);
-  };
-  syncPagePosition();
-  requestAnimationFrame(syncPagePosition);
-  window.setTimeout(syncPagePosition, 80);
-  updateSkillPager(nextPage);
-};
-const moveSkillPage = delta => {
-  const nextPage = Math.max(0, Math.min(skillDots.children.length - 1, activeSkillPage + delta));
-  skillGrid.scrollTo({left: nextPage * skillGrid.clientWidth, behavior: prefersReducedMotion ? 'auto' : 'smooth'});
-  updateSkillPager(nextPage);
-};
-skillPrevious.addEventListener('click', () => moveSkillPage(-1));
-skillNext.addEventListener('click', () => moveSkillPage(1));
-skillDots.addEventListener('click', event => {
-  const dot = event.target.closest('.skill-page-dot');
-  if (!dot) return;
-  const page = Number(dot.dataset.page);
-  skillGrid.scrollTo({left: page * skillGrid.clientWidth, behavior: prefersReducedMotion ? 'auto' : 'smooth'});
-  updateSkillPager(page);
-});
-skillGrid.addEventListener('scroll', () => {
-  const page = Math.round(skillGrid.scrollLeft / Math.max(1, skillGrid.clientWidth));
-  updateSkillPager(page);
-}, {passive: true});
-skillGrid.addEventListener('keydown', event => {
-  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-  event.preventDefault();
-  moveSkillPage(event.key === 'ArrowRight' ? 1 : -1);
-});
+skillGrid.innerHTML = allSkills.map((x, index) => `<button class="skill" type="button" title="${x.full}" aria-label="${x.full}" aria-expanded="false" aria-controls="skill-popover" data-skill-index="${index}" style="--skill:${x.c}"><strong>${x.n}</strong><span>${x.p}</span></button>`).join('');
 let skillDragStart = 0;
 let skillDragScrollStart = 0;
 let skillDragging = false;
@@ -169,18 +108,9 @@ const finishSkillDrag = event => {
   if (!skillDragging) return;
   suppressSkillClick = true;
   skillDragging = false;
-  const page = Math.round(skillGrid.scrollLeft / Math.max(1, skillGrid.clientWidth));
-  skillGrid.scrollTo({left: page * skillGrid.clientWidth, behavior: prefersReducedMotion ? 'auto' : 'smooth'});
-  updateSkillPager(page);
 };
 skillGrid.addEventListener('pointerup', finishSkillDrag);
 skillGrid.addEventListener('pointercancel', finishSkillDrag);
-let skillResizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(skillResizeTimer);
-  skillResizeTimer = setTimeout(renderSkillPages, 120);
-});
-renderSkillPages();
 const skillPopover = document.querySelector('#skill-popover');
 const skillPopoverName = skillPopover.querySelector('.skill-popover-name');
 const skillPopoverLevel = skillPopover.querySelector('.skill-popover-level');
