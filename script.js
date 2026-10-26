@@ -84,8 +84,6 @@ const finishSkillDrag = event => {
 };
 skillGrid.addEventListener('pointerup', finishSkillDrag);
 skillGrid.addEventListener('pointercancel', finishSkillDrag);
-const skillPrevious = document.querySelector('[data-skill-prev]');
-const skillNext = document.querySelector('[data-skill-next]');
 const skillStep = () => {
   const firstSkill = skillGrid.querySelector('.skill');
   if (!firstSkill) return Math.max(1, skillGrid.clientWidth * .5);
@@ -93,27 +91,16 @@ const skillStep = () => {
   const columnGap = parseFloat(styles.columnGap || styles.gap || '0');
   return Math.max(1, firstSkill.getBoundingClientRect().width + columnGap);
 };
-const updateSkillControls = () => {
-  const maxScroll = Math.max(0, skillGrid.scrollWidth - skillGrid.clientWidth);
-  const currentScroll = Math.max(0, Math.min(maxScroll, skillGrid.scrollLeft));
-  skillPrevious.disabled = currentScroll <= 1;
-  skillNext.disabled = maxScroll <= 1 || currentScroll >= maxScroll - 1;
-};
 const moveSkills = direction => {
   skillGrid.scrollBy({left: direction * skillStep(), behavior: prefersReducedMotion ? 'auto' : 'smooth'});
   skillGrid.focus({preventScroll:true});
 };
-skillPrevious.addEventListener('click', () => moveSkills(-1));
-skillNext.addEventListener('click', () => moveSkills(1));
 skillGrid.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft') { event.preventDefault(); moveSkills(-1); }
   if (event.key === 'ArrowRight') { event.preventDefault(); moveSkills(1); }
   if (event.key === 'Home') { event.preventDefault(); skillGrid.scrollTo({left:0, behavior:prefersReducedMotion ? 'auto' : 'smooth'}); }
   if (event.key === 'End') { event.preventDefault(); skillGrid.scrollTo({left:skillGrid.scrollWidth, behavior:prefersReducedMotion ? 'auto' : 'smooth'}); }
 });
-skillGrid.addEventListener('scroll', updateSkillControls, {passive:true});
-window.addEventListener('resize', updateSkillControls);
-requestAnimationFrame(updateSkillControls);
 const skillPopover = document.querySelector('#skill-popover');
 const skillPopoverName = skillPopover.querySelector('.skill-popover-name');
 const skillPopoverLevel = skillPopover.querySelector('.skill-popover-level');

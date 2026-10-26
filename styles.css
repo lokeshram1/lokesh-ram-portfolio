@@ -472,31 +472,6 @@ main > .section{height:auto;min-height:100svh;overflow:visible}
   scroll-snap-align:center;
 }
 .skill-grid .skill strong{max-width:calc(100% - 10px);overflow-wrap:anywhere;text-align:center}
-.skill-carousel-arrow{
-  position:absolute;
-  z-index:3;
-  top:50%;
-  display:grid;
-  place-items:center;
-  width:40px;
-  height:40px;
-  min-height:40px;
-  padding:0;
-  border:1px solid rgba(79,146,158,.3);
-  border-radius:50%;
-  background:rgba(255,255,255,.94);
-  color:#4f929e;
-  font-size:1.35rem;
-  line-height:1;
-  box-shadow:0 7px 16px rgba(36,73,82,.14);
-  transform:translateY(-50%);
-  transition:background .2s ease,color .2s ease,opacity .2s ease,transform .2s ease;
-}
-.skill-carousel-prev{left:.35rem}
-.skill-carousel-next{right:.35rem}
-.skill-carousel-arrow:not(:disabled):hover,.skill-carousel-arrow:not(:disabled):focus-visible{background:#67b6a5;color:#fff;transform:translateY(-50%) scale(1.06)}
-.skill-carousel-arrow:focus-visible{outline:3px solid rgba(103,182,165,.38);outline-offset:3px}
-.skill-carousel-arrow:disabled{cursor:not-allowed;opacity:.3;box-shadow:none}
 .skill-scroll-meta{display:flex;align-items:center;gap:.8rem;flex:0 0 auto;margin:.35rem clamp(2.5rem,5vw,4.5rem) 0;color:#8e9ba2;font-family:var(--font-display);font-size:.62rem;letter-spacing:.04em}
 .skill-scroll-label{min-width:max-content}
 .skill-scroll-progress{height:3px;flex:1;min-width:0;border-radius:99px;background:#dee7e8;overflow:hidden}
@@ -514,8 +489,6 @@ main > .section{height:auto;min-height:100svh;overflow:visible}
   .skill-carousel{padding-inline:2.15rem}
   .skill-grid{--skill-size:clamp(50px,min(17vw,8vh),72px);gap:clamp(.4rem,2vw,.75rem);padding-inline:.35rem 1.5rem}
   .skill-grid .skill{font-size:clamp(.48rem,2vw,.68rem)}
-  .skill-carousel-arrow{width:34px;height:34px;min-height:34px;font-size:1.1rem}
-  .skill-carousel-prev{left:.1rem}.skill-carousel-next{right:.1rem}
   .skill-scroll-meta{margin-inline:2.15rem;font-size:.55rem;gap:.55rem}
   .skill-popover{padding:1.1rem 3rem 1rem 1rem}
   .skill-popover-description{font-size:.72rem}
@@ -530,7 +503,7 @@ main > .section{height:auto;min-height:100svh;overflow:visible}
   .skill-grid .skill{font-size:.66rem}
 }
 @media(prefers-reduced-motion:reduce){
-  .skill-hint-arrow,.skill-carousel-arrow,.skill-scroll-progress span{animation:none;transition:none}
+  .skill-hint-arrow,.skill-scroll-progress span{animation:none;transition:none}
   .skill-grid{scroll-behavior:auto}
 }
 
