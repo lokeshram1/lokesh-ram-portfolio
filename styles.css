@@ -594,3 +594,79 @@ button,.resume-button{font-size:.86rem;min-height:46px}
   input,textarea{font-size:clamp(.9rem,3.55vw,1rem)}
   button,.resume-button{font-size:.9rem}
 }
+
+/* Keep the complete Skills matrix centered after removing helper/status copy. */
+.skills .section-title{
+  margin-bottom:clamp(.75rem,2vh,1.2rem);
+}
+.skill-carousel{
+  align-items:center;
+  justify-content:center;
+}
+.skill-grid{
+  align-content:center;
+  justify-content:safe center;
+  padding-inline:clamp(.5rem,1.5vw,1rem);
+}
+@media(max-width:900px){
+  .skill-grid{
+    justify-content:safe center;
+    padding-inline:clamp(.35rem,1.5vw,.75rem);
+  }
+}
+@media(max-width:600px){
+  .skills .section-title{margin-bottom:.75rem}
+  .skill-grid{
+    justify-content:safe center;
+    padding-inline:.35rem;
+  }
+}
+
+/* Keep the city prominent while presenting relocation availability as supporting text. */
+.contact-location{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:.38em;
+  white-space:nowrap;
+}
+.contact-location > [aria-hidden="true"]{color:#2f8894}
+.location-note{
+  color:#667881;
+  font-size:.84em;
+  font-weight:400;
+}
+@media(max-width:420px){
+  .contact-location{
+    flex-wrap:wrap;
+    row-gap:.12rem;
+    white-space:normal;
+  }
+}
+
+/* Stable, single-line hero typewriter treatment. */
+.hero h1{
+  width:100%;
+  min-height:1.08em;
+  white-space:nowrap;
+  overflow:visible;
+}
+#typed-line{display:inline}
+.caret{
+  color:#aedbd4;
+  margin-left:clamp(.25rem,1vw,.8rem);
+  animation:headline-caret-blink .82s step-end infinite;
+}
+@keyframes headline-caret-blink{
+  0%,48%{opacity:1}
+  49%,100%{opacity:0}
+}
+@media(max-width:600px){
+  .hero h1{
+    font-size:clamp(1.55rem,6.6vw,2.25rem);
+    letter-spacing:clamp(-.08rem,-.25vw,-.03rem);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .caret{animation:none;opacity:1}
+}

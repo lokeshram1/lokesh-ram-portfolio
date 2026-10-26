@@ -8,12 +8,10 @@ const content = {
     {title:"Operations Analyst", company:"AIESEC", tech:"Excel · SQL · Power BI · GCP", bullets:["Analyzed operational performance data and KPIs using Excel and SQL, identifying process inefficiencies that improved productivity by 15% and reduced operational costs by 10% through data-driven process optimization.","Built KPI dashboards and automated reporting workflows, collaborating with cross-functional teams to achieve 95% KPI attainment and align analytics insights with organizational performance objectives.","Maintained cloud-based operational datasets on Google Cloud Platform (GCP), ensuring data accuracy, improving accessibility for analytics reporting, and supporting Agile-driven operational initiatives."]}
   ],
   skills: [
-    {name:"AI/ML & LLM ENGINEERING", items:makeSkills([["PY","Python"],["LLM","LLMs"],["GenAI","Generative AI"],["OpenAI","OpenAI API"],["Claude","Claude API"],["RAG"],["Agents","AI Agents"],["Embed","Embeddings"],["Vector","Vector Search"],["Tools","Tool Calling"],["JSON","Structured Outputs"],["Eval","LLM Evaluation"],["Guard","Guardrails"]],95,"#4b91b8")},
-    {name:"AI APPLICATION ENGINEERING", items:makeSkills([["NL→SQL","Natural Language-to-SQL"],["RAG","RAG Pipelines"],["Agentic","Agentic Workflows"],["HITL","Human-in-the-Loop Systems"],["Eval","Model Evaluation"],["FastAPI"],["REST","REST APIs"],["Schema","JSON Schema"],["API","API Integration"],["Contract","Contract Validation"]],90,"#7c8bd3")},
-    {name:"MACHINE LEARNING & DATA SCIENCE", items:makeSkills([["XGB","XGBoost"],["ARIMA"],["Predict","Predictive Modeling"],["Features","Feature Engineering"],["TS","Time-Series Forecasting"],["Stats","Statistical Analysis"],["EDA","Exploratory Data Analysis"]],85,"#69b8aa")},
-    {name:"CLOUD & PRODUCTION ENGINEERING", items:makeSkills([["AWS"],["Azure"],["ADF","Azure Data Factory"],["Synapse","Azure Synapse Analytics"],["Docker"],["K8s","Kubernetes"],["CI/CD"],["ETL","ETL/ELT"],["Model","Data Modeling"],["PG","PostgreSQL"]],85,"#e9a53b")},
-    {name:"ANALYTICS & VISUALIZATION", items:makeSkills([["BI","Power BI"],["DAX"],["PQ","Power Query"],["KPI","KPI Analysis"],["Dash","Dashboard Development"]],80,"#e77e62")},
-    {name:"ENGINEERING & COLLABORATION", items:makeSkills([["Git"],["GitHub"],["Reqs","Requirements Gathering"],["Discovery","Technical Discovery"],["Stake","Stakeholder Collaboration"],["Proto","Technical Prototyping"],["Systems","Systems Integration"],["Design","Solution Design"]],90,"#ed7165")}
+    {name:"AI & MACHINE LEARNING", items:makeSkills([["PY","Python"],["Torch","PyTorch"],["ML","Machine Learning"],["NLP","Natural Language Processing (NLP)"],["LLM","Large Language Models (LLMs)"],["RAG","Retrieval-Augmented Generation (RAG)"],["Agents","AI Agents"],["Eval","LLM Evaluation"]],90,"#4b91b8")},
+    {name:"CLOUD & AI PLATFORMS", items:makeSkills([["AWS","Amazon Web Services (AWS)"],["Azure","Microsoft Azure"],["GCP","Google Cloud Platform (GCP)"],["Bedrock","Amazon Bedrock"]],85,"#e9a53b")},
+    {name:"DATA ENGINEERING", items:makeSkills([["SQL"],["ETL","ETL/ELT Pipelines"],["ADF","Azure Data Factory"],["Synapse","Azure Synapse Analytics"],["Databricks","Azure Databricks"],["Spark","Apache Spark"],["PG","PostgreSQL"],["Airflow","Apache Airflow"]],90,"#69b8aa")},
+    {name:"SOFTWARE & ANALYTICS", items:makeSkills([["C++"],["Docker"],["CI/CD"],["GitHub","Git & GitHub"],["BI","Power BI"],["FastAPI"],["sklearn","Scikit-learn"],["REST","REST APIs"]],85,"#7c8bd3")}
   ],
   projects: [
     {title:"IncidentIQ", url:"https://github.com/lokeshram1/IncidentIQ", overview:"Evidence-driven AI platform for production incident investigation and root-cause analysis.", points:["Collects and analyzes logs, metrics, and deployment history.","Generates competing root-cause hypotheses using LLM reasoning.","Validates model conclusions using deterministic evidence and scoring.","Produces traceable investigation reports with supporting and contradicting evidence."], tech:"Python · LLMs · FastAPI · React · Docker · PostgreSQL"},
@@ -27,58 +25,33 @@ document.querySelector('#about-text').innerHTML = content.about.replace(/\n\n/g,
 document.querySelector('#experience-track').innerHTML = content.experience.map((x, index) => `<article class="experience-card"><div class="card-number" aria-label="Experience ${String(index + 1).padStart(2, '0')}">${String(index + 1).padStart(2, '0')}</div><h3>${x.title}</h3><div class="company">${x.company}</div><div class="techs">${x.tech}</div><ul>${x.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`).join('');
 const skillExplanations = {
   "Python":"Used for machine learning, automation, data analysis, and backend development.",
-  "LLMs":"Used to add language understanding, generation, and reasoning to AI workflows.",
-  "Generative AI":"Used to create practical text-generation and assistant experiences.",
-  "OpenAI API":"Used to integrate language models into application workflows and tools.",
-  "Claude API":"Used for reliable language-model workflows, analysis, and structured responses.",
-  "RAG":"Used to ground model responses in relevant source information.",
+  "PyTorch":"Used to build, train, and evaluate deep-learning models.",
+  "Machine Learning":"Used to develop predictive models and data-driven applications.",
+  "Natural Language Processing (NLP)":"Used to process, analyze, and model human language.",
+  "Large Language Models (LLMs)":"Used to build language-based reasoning, generation, and automation workflows.",
+  "Retrieval-Augmented Generation (RAG)":"Used to ground model responses in relevant source information.",
   "AI Agents":"Used to coordinate model reasoning, tools, and multi-step tasks.",
-  "Embeddings":"Used to represent text for semantic similarity and retrieval.",
-  "Vector Search":"Used to find semantically relevant records for AI applications.",
-  "Tool Calling":"Used to let models invoke application functions in controlled workflows.",
-  "Structured Outputs":"Used to keep model responses consistent with an expected data shape.",
   "LLM Evaluation":"Used to compare model behavior against quality and reliability criteria.",
-  "Guardrails":"Used to constrain AI behavior and make application outputs safer and more predictable.",
-  "Natural Language-to-SQL":"Used to translate business questions into query workflows for structured data.",
-  "RAG Pipelines":"Used to ingest, retrieve, and pass relevant context into model prompts.",
-  "Agentic Workflows":"Used to coordinate multi-step tasks that combine models, tools, and validation.",
-  "Human-in-the-Loop Systems":"Used to add review and approval steps where people should make the final decision.",
-  "Model Evaluation":"Used to measure model quality and identify areas for improvement.",
-  "FastAPI":"Used to build lightweight Python APIs for data and AI applications.",
-  "REST APIs":"Used to expose application capabilities through predictable HTTP endpoints.",
-  "JSON Schema":"Used to define and validate the shape of API and model data.",
-  "API Integration":"Used to connect applications with external services and internal systems.",
-  "Contract Validation":"Used to verify that requests and responses follow an agreed interface.",
-  "XGBoost":"Used for predictive modeling and explainable tabular-data classification or regression.",
-  "ARIMA":"Used for time-series forecasting when historical patterns are informative.",
-  "Predictive Modeling":"Used to estimate outcomes and support data-informed decisions.",
-  "Feature Engineering":"Used to turn raw data into useful signals for machine-learning models.",
-  "Time-Series Forecasting":"Used to model trends and future values over time.",
-  "Statistical Analysis":"Used to summarize data, test patterns, and support sound conclusions.",
-  "Exploratory Data Analysis":"Used to understand distributions, relationships, and data-quality issues.",
-  "AWS":"Used to build and operate cloud-based application and data workflows.",
-  "Azure":"Used to support cloud data and application engineering workflows.",
+  "Amazon Web Services (AWS)":"Used to build and operate cloud-based application and data workflows.",
+  "Microsoft Azure":"Used to support cloud data and application engineering workflows.",
+  "Google Cloud Platform (GCP)":"Used to maintain cloud-based operational data and analytics workflows.",
+  "Amazon Bedrock":"Used to build managed generative-AI applications with foundation models.",
+  "SQL":"Used to query, validate, transform, and analyze structured data.",
+  "ETL/ELT Pipelines":"Used to move, transform, and validate data for analytics and AI systems.",
   "Azure Data Factory":"Used to orchestrate data movement and transformation pipelines.",
   "Azure Synapse Analytics":"Used to work with large-scale analytical data and SQL workflows.",
-  "Docker":"Used to package applications and services with consistent environments.",
-  "Kubernetes":"Used to coordinate containerized services in a repeatable deployment environment.",
-  "CI/CD":"Used to automate checks, builds, and delivery steps for software changes.",
-  "ETL/ELT":"Used to move, transform, and validate data for downstream use.",
-  "Data Modeling":"Used to organize data structures so they remain useful and maintainable.",
+  "Azure Databricks":"Used for collaborative large-scale data engineering and machine-learning workloads.",
+  "Apache Spark":"Used for distributed processing of large datasets.",
   "PostgreSQL":"Used for reliable relational storage, querying, and application persistence.",
+  "Apache Airflow":"Used to schedule and monitor repeatable data workflows.",
+  "C++":"Used for performance-oriented programming and core computer-science work.",
+  "Docker":"Used to package applications and services with consistent environments.",
+  "CI/CD":"Used to automate checks, builds, and delivery steps for software changes.",
+  "Git & GitHub":"Used for version control, collaboration, code review, and project history.",
   "Power BI":"Used to build interactive dashboards for operational and business analysis.",
-  "DAX":"Used to create calculations and measures in Power BI data models.",
-  "Power Query":"Used to clean, reshape, and prepare data for analysis.",
-  "KPI Analysis":"Used to track performance measures and identify operational trends.",
-  "Dashboard Development":"Used to present metrics and findings in clear, interactive views.",
-  "Git":"Used to track changes and manage development work safely.",
-  "GitHub":"Used to collaborate on code, review changes, and maintain project history.",
-  "Requirements Gathering":"Used to clarify user needs and define useful technical outcomes.",
-  "Technical Discovery":"Used to understand constraints, systems, and implementation options.",
-  "Stakeholder Collaboration":"Used to align technical work with the people who rely on its results.",
-  "Technical Prototyping":"Used to test ideas quickly before investing in a larger implementation.",
-  "Systems Integration":"Used to connect services and data across an application landscape.",
-  "Solution Design":"Used to shape maintainable technical approaches around real requirements."
+  "FastAPI":"Used to build lightweight Python APIs for data and AI applications.",
+  "Scikit-learn":"Used to train, evaluate, and compare classical machine-learning models.",
+  "REST APIs":"Used to expose application capabilities through predictable HTTP endpoints."
 };
 const allSkills = content.skills.flatMap(category => category.items.map(item => ({...item, category: category.name})));
 const skillGrid = document.querySelector('#skill-grid');
@@ -113,9 +86,6 @@ skillGrid.addEventListener('pointerup', finishSkillDrag);
 skillGrid.addEventListener('pointercancel', finishSkillDrag);
 const skillPrevious = document.querySelector('[data-skill-prev]');
 const skillNext = document.querySelector('[data-skill-next]');
-const skillProgress = document.querySelector('.skill-scroll-progress');
-const skillProgressFill = skillProgress.querySelector('span');
-const skillScrollLabel = document.querySelector('.skill-scroll-label');
 const skillStep = () => {
   const firstSkill = skillGrid.querySelector('.skill');
   if (!firstSkill) return Math.max(1, skillGrid.clientWidth * .5);
@@ -126,12 +96,8 @@ const skillStep = () => {
 const updateSkillControls = () => {
   const maxScroll = Math.max(0, skillGrid.scrollWidth - skillGrid.clientWidth);
   const currentScroll = Math.max(0, Math.min(maxScroll, skillGrid.scrollLeft));
-  const progress = maxScroll ? (currentScroll / maxScroll) * 100 : 100;
   skillPrevious.disabled = currentScroll <= 1;
   skillNext.disabled = maxScroll <= 1 || currentScroll >= maxScroll - 1;
-  skillProgressFill.style.width = `${Math.max(0, Math.min(100, progress))}%`;
-  skillProgress.setAttribute('aria-valuenow', String(Math.round(progress)));
-  skillScrollLabel.textContent = maxScroll > 1 ? `Scroll to explore · ${Math.round(progress)}% viewed` : 'All skills visible';
 };
 const moveSkills = direction => {
   skillGrid.scrollBy({left: direction * skillStep(), behavior: prefersReducedMotion ? 'auto' : 'smooth'});
@@ -195,11 +161,48 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape') closeSkillDetails();
 });
 document.querySelector('#project-stack').innerHTML = content.projects.map((x, index) => `<article class="project-card"><div class="card-number" aria-label="Project ${String(index + 1).padStart(2, '0')}">PROJECT ${String(index + 1).padStart(2, '0')}</div><h3>${x.title}</h3><p class="project-overview">${x.overview}</p><ul class="project-points">${x.points.map(point => `<li>${point}</li>`).join('')}</ul><div class="project-tech">${x.tech}</div><a class="project-link" href="${x.url}" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></article>`).join('');
-const phrases = ["I’m Lokesh","I like morning runs","I turn ideas into working tools","I get lost in a good book","Always curious. Always building."];
+const phrases = ["Hi, I’m Lokesh.","I like to run 🏃","I turn ideas into tools.","I get lost in books 📖","Always curious.","Always building."];
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let phrase=0, char=0, deleting=false;
-function type(){const el=document.querySelector('#typed-line'); if(!el)return; if(prefersReducedMotion){el.textContent=phrases[0];return;} const current=phrases[phrase]; el.textContent=current.slice(0,char); if(!deleting&&char<current.length){char++;setTimeout(type,85)}else if(!deleting){deleting=true;setTimeout(type,1500)}else if(char>0){char--;setTimeout(type,42)}else{deleting=false;phrase=(phrase+1)%phrases.length;setTimeout(type,300)}}
-type();
+const typedLine = document.querySelector('#typed-line');
+const typingCursor = document.querySelector('.caret');
+let phraseIndex = 0;
+let characterIndex = 0;
+let deletingPhrase = false;
+
+function typeHeadline() {
+  if (!typedLine) return;
+  if (prefersReducedMotion) {
+    typedLine.textContent = phrases[0];
+    typingCursor?.classList.add('is-static');
+    return;
+  }
+
+  const currentPhrase = phrases[phraseIndex];
+  const currentCharacters = Array.from(currentPhrase);
+  typedLine.textContent = currentCharacters.slice(0, characterIndex).join('');
+
+  if (!deletingPhrase && characterIndex < currentCharacters.length) {
+    characterIndex += 1;
+    setTimeout(typeHeadline, 78);
+    return;
+  }
+  if (!deletingPhrase) {
+    deletingPhrase = true;
+    setTimeout(typeHeadline, 1350);
+    return;
+  }
+  if (characterIndex > 0) {
+    characterIndex -= 1;
+    setTimeout(typeHeadline, 38);
+    return;
+  }
+
+  deletingPhrase = false;
+  phraseIndex = (phraseIndex + 1) % phrases.length;
+  setTimeout(typeHeadline, 260);
+}
+
+typeHeadline();
 function setupCarousel(selector) {
   const wrap = document.querySelector(`[data-carousel="${selector}"]`);
   if (!wrap) return;
